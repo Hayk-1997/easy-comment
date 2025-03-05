@@ -1,4 +1,4 @@
-package org.jetbrains.plugins.template
+package com.github.hayk1997.easycomment
 
 import com.intellij.DynamicBundle
 import org.jetbrains.annotations.NonNls
