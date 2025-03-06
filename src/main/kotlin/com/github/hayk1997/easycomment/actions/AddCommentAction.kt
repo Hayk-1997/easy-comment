@@ -22,8 +22,8 @@ class AddCommentAction : AnAction() {
             if (virtualFile != null) {
                 val comment = Messages.showInputDialog(
                     project,
-                    "Enter your comment:",
-                    "Add Short Comment",
+                    'Enter your comment:',
+                    'Add Short Comment',
                     Messages.getQuestionIcon()
                 )
 
@@ -35,7 +35,7 @@ class AddCommentAction : AnAction() {
     }
 
     private fun saveComment(file: VirtualFile, lineNumber: Int, comment: String) {
-        val commentFile = File(file.path + ".comments")
+        val commentFile = File(file.path + '.comments')
         commentFile.appendText("Line $lineNumber: $comment\n")
     }
 }
