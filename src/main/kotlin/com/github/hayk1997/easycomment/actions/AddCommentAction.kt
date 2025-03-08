@@ -1,14 +1,21 @@
 package com.github.hayk1997.easycomment.actions
 
+import com.github.hayk1997.easycomment.CommentTable
+import com.github.hayk1997.easycomment.DatabaseConfig
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.ui.Messages
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.openapi.fileEditor.FileDocumentManager
-import java.io.File
+import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.transactions.transaction
 
 class AddCommentAction : AnAction() {
+    init {
+        DatabaseConfig.connect()
+    }
+
     override fun actionPerformed(e: AnActionEvent) {
         val editor: Editor? = e.getData(com.intellij.openapi.actionSystem.CommonDataKeys.EDITOR)
         val project = e.project
@@ -22,20 +29,25 @@ class AddCommentAction : AnAction() {
             if (virtualFile != null) {
                 val comment = Messages.showInputDialog(
                     project,
-                    'Enter your comment:',
-                    'Add Short Comment',
+                    "Enter your comment:",
+                    "Add Short Comment",
                     Messages.getQuestionIcon()
                 )
 
-                if (comment != null && comment.isNotEmpty()) {
-                    saveComment(virtualFile, lineNumber, comment)
+                if (!comment.isNullOrEmpty()) {
+                    saveComment(virtualFile.path, lineNumber, comment)
                 }
             }
         }
     }
 
-    private fun saveComment(file: VirtualFile, lineNumber: Int, comment: String) {
-        val commentFile = File(file.path + '.comments')
-        commentFile.appendText("Line $lineNumber: $comment\n")
+    private fun saveComment(filePath: String, lineNumber: Int, comment: String) {
+        transaction {
+            CommentTable.insert {
+                it[CommentTable.filePath] = filePath
+                it[CommentTable.lineNumber] = lineNumber
+                it[CommentTable.comment] = comment
+            }
+        }
     }
 }
