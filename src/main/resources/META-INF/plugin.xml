@@ -8,14 +8,6 @@
 
     <resource-bundle>messages.MyBundle</resource-bundle>
 
-    <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.hayk1997.easycomment.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
-    </extensions>
-
-    <applicationListeners>
-        <listener class="com.github.hayk1997.easycomment.listeners.MyApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
-    </applicationListeners>
-
     <!--NEW IMPLEMENTATION-->
     <actions>
         <action id="com.github.hayk1997.easycomment.actions.AddCommentAction"
