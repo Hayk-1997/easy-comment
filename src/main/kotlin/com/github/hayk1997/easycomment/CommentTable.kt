@@ -7,6 +7,7 @@ object CommentTable : Table("comments") {
     val filePath = varchar("file_path", 255)
     val lineNumber = integer("line_number")
     val comment = text("comment")
+    val author = varchar("author", 255)
 
     override val primaryKey = PrimaryKey(id)
 }
