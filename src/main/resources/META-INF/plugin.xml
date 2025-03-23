@@ -8,11 +8,14 @@
 
     <resource-bundle>messages.MyBundle</resource-bundle>
 
-    <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.hayk1997.easycomment.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
-    </extensions>
-
-    <applicationListeners>
-        <listener class="com.github.hayk1997.easycomment.listeners.MyApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
-    </applicationListeners>
+    <!--NEW IMPLEMENTATION-->
+    <actions>
+        <action id="com.github.hayk1997.easycomment.actions.AddCommentAction"
+                class="com.github.hayk1997.easycomment.actions.AddCommentAction"
+                text="Add Short Comment"
+                description="Add a short comment to the selected line"
+                icon="icons/commentIcon.svg">
+            <add-to-group group-id="EditorPopupMenu" anchor="after" relative-to-action="AddBookmark"/>
+        </action>
+    </actions>
 </idea-plugin>
